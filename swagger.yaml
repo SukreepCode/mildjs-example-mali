@@ -108,13 +108,13 @@ definitions:
   users:
     type: object
     required:
-        - email
+        - username
         - password
     properties:
       id:
         type: integer
         description: user Id
-      email:
+      username:
         type: string
         description: user Email
       password:

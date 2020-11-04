@@ -12,7 +12,7 @@ describe('Testing Auth', () => {
   describe('[POST] /signup', () => {
     it('response should have the Create userData', () => {
       const userData: CreateUserDto = {
-        email: 'lkm@gmail.com',
+        username: 'lkm@gmail.com',
         password: 'q1w2e3r4',
       };
 
@@ -26,7 +26,7 @@ describe('Testing Auth', () => {
   describe('[POST] /login', () => {
     it('response should have the Set-Cookie header with the Authorization token', async () => {
       const userData: CreateUserDto = {
-        email: 'lim@gmail.com',
+        username: 'lim@gmail.com',
         password: 'q1w2e3r4',
       };
       // process.env.JWT_SECRET = 'jwt_secret';
@@ -71,10 +71,10 @@ describe('Testing Auth', () => {
 //   });
 
 //   describe('when registering a user', () => {
-//     describe('if the email is already token', () => {
+//     describe('if the username is already token', () => {
 //       it('should throw an error', async () => {
 //         const userData: CreateUserDto = {
-//           email: 'lkm@gmail.com',
+//           username: 'lkm@gmail.com',
 //           password: 'q1w2e3r4',
 //         };
 
@@ -86,14 +86,14 @@ describe('Testing Auth', () => {
 
 //         await expect(authService.signup(userData))
 //             .rejects
-//             .toMatchObject(new HttpException(400, `User with email ${userData.email} already exists`));
+//             .toMatchObject(new HttpException(400, `User with username ${userData.username} already exists`));
 //       });
 //     });
 
-//     describe('if the email is not token', () => {
+//     describe('if the username is not token', () => {
 //       it('should not throw an error', async () => {
 //         const userData: CreateUserDto = {
-//           email: 'lkm@gmail.com',
+//           username: 'lkm@gmail.com',
 //           password: 'q1w2e3r4',
 //         };
 //         process.env.JWT_SECRET = 'jwt_secret';

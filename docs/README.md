@@ -30,7 +30,7 @@ Note: `typeorm-di` is just the wrapper library of `typeorm`
         id: number;
 
         @Column()
-        email: string;
+        username: string;
     }
     ```
 

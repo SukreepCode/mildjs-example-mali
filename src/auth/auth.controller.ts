@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { Controller, Use, Post, StatusCodes, validateType, HttpException, responseFormat } from '@mildjs/core';
+import { Controller, Use, Post, StatusCodes, validateType, HttpException, responseFormat, Get} from '@mildjs/core';
 
 import { CreateUserDto } from '../users/dtos/users.dto';
-import { User } from '../users/users.entity';
+import { UsersEntity } from '../users/users.entity';
 
 import { AuthService } from './auth.service';
 import { isAuth, isRole } from './auth.middleware';
@@ -20,7 +20,7 @@ export class AuthController {
   @Post('/signup')
   public async signUp(req: Request, res: Response) {
     const userData: CreateUserDto = req.body;
-    const signUpUserData: User = await this.userService.create(userData);
+    const signUpUserData: UsersEntity = await this.userService.create(userData);
     responseFormat(res, { data: signUpUserData });
   }
 
@@ -29,8 +29,8 @@ export class AuthController {
   public async logIn(req: Request, res: Response) {
     const userData: CreateUserDto = req.body;
 
-    const findUser: User = await this.userService.findByEmail(userData.email);
-    if (!findUser) throw new HttpException(409, `You're email ${userData.email} not found`);
+    const findUser: UsersEntity = await this.userService.findByEmail(userData.username);
+    if (!findUser) throw new HttpException(409, `You're username ${userData.username} not found`);
 
     const isPasswordMatching: boolean = userData.password === findUser.password;
     if (!isPasswordMatching) throw new HttpException(409, `The password is incorrect`);
@@ -56,13 +56,18 @@ export class AuthController {
   @Use(isRole())
   public async testAuth(req: RequestWithUser, res: Response) {
     if (!req.user) new HttpException(StatusCodes.UNAUTHORIZED, 'Wrong authentication token');
-    responseFormat(res, { message: `Hi ${req.user.email}` });
+    responseFormat(res, { message: `Hi ${req.user.username}` });
   }
 
   @Post('/test-role')
   @Use(isRole('student'))
   public async testRole(req: RequestWithUser, res: Response) {
     if (!req.user) new HttpException(StatusCodes.UNAUTHORIZED, 'Wrong authentication token');
-    responseFormat(res, { message: `Hi ${req.user.email}` });
+    responseFormat(res, { message: `Hi ${req.user.username}` });
+  }
+
+  @Get('test-auth')
+  public async testttt(req: Request, res: Response) {
+    responseFormat(res, {});
   }
 }

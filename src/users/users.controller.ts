@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Controller, Delete, Get, Use, Post, Put, validateType, StatusCodes } from '@mildjs/core';
 import { Container } from 'typeorm-di';
 
-import { User } from './users.entity';
+import { UsersEntity } from './users.entity';
 import { UsersService } from './users.service';
 
 import { CreateUserDto } from './dtos/users.dto';
@@ -15,7 +15,7 @@ export class UsersController {
 
   @Get('/')
   public async getUsers(req: Request, res: Response) {
-    const data: User[] = await this.userService.findAll();
+    const data: UsersEntity[] = await this.userService.findAll();
     res.status(StatusCodes.OK).json({ data });
   }
 
@@ -30,7 +30,7 @@ export class UsersController {
   @Use(validateType(CreateUserDto))
   public async createUser(req: Request, res: Response) {
     const userData: CreateUserDto = req.body;
-    const data: User = await this.userService.create(userData);
+    const data: UsersEntity = await this.userService.create(userData);
     res.status(StatusCodes.CREATED).json({ data });
   }
 
@@ -38,9 +38,9 @@ export class UsersController {
   @Use(validateType(CreateUserDto, true))
   public async updateUser(req: Request, res: Response) {
     const userId: number = Number(req.params.id);
-    const userData: User = req.body;
+    const userData: UsersEntity = req.body;
 
-    const data: User = await this.userService.update(userId, userData);
+    const data: UsersEntity = await this.userService.update(userId, userData);
     res.status(StatusCodes.OK).json({ data });
   }
 

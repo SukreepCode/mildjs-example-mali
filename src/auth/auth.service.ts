@@ -4,17 +4,17 @@ import { CreateUserDto } from '../users/dtos/users.dto';
 import { Repository, InjectRepository, Service, Container } from 'typeorm-di';
 import { HttpException } from '@mildjs/core';
 import { DataStoredInToken, TokenData } from './auth.interface';
-import { User } from '../users/users.entity';
+import { UsersEntity } from '../users/users.entity';
 import { vars } from '../app/config';
 
 @Service()
 export class AuthService {
-  public async login(user: User): Promise<{ token: string; user: User }> {
+  public async login(user: UsersEntity): Promise<{ token: string; user: UsersEntity }> {
     const token = this.createToken(user).token;
     return { token, user };
   }
 
-  public createToken(user: User): TokenData {
+  public createToken(user: UsersEntity): TokenData {
     const dataStoredInToken: DataStoredInToken = { id: user.id };
     const secret: string = vars.jwtSecret;
     const expiresIn: number = vars.jwtExpirationInterval * 60;

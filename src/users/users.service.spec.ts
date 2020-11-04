@@ -1,22 +1,22 @@
 import { assignObject } from '@mildjs/core';
 import { UsersService } from './users.service';
-import { User } from './users.entity';
+import { UsersEntity } from './users.entity';
 import { Repository } from 'typeorm';
 import { MockRepository } from '../app/test';
 
-const userData = assignObject(new User(), {
+const userData = assignObject(new UsersEntity(), {
     id: 1,
-    email: 'thada',
+    username: 'thada',
     password: 'aaa'
 });
 
-const allUserData: User[] = [userData];
+const allUserData: UsersEntity[] = [userData];
 
 describe('Test Module: Providers', () => {
     let service: UsersService;
 
     beforeEach(async () => {
-        service = new UsersService(new MockRepository<User>(allUserData));
+        service = new UsersService(new MockRepository<UsersEntity>(allUserData));
     });
 
     it('should be defined', () => {

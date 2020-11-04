@@ -37,7 +37,7 @@
 //   describe('[POST] /users', () => {
 //     it('response statusCode 201 / created', async () => {
 //       const userData: CreateUserDto = {
-//         email: 'lkm@gmail.com',
+//         username: 'lkm@gmail.com',
 //         password: 'q1w2e3r4',
 //       };
 
@@ -52,7 +52,7 @@
 //     it('response statusCode 200 / updated', async () => {
 //       const userId: number = 1;
 //       const userData: CreateUserDto = {
-//         email: 'lim@gmail.com',
+//         username: 'lim@gmail.com',
 //         password: '1q2w3e4r',
 //       };
 
