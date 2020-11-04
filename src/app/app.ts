@@ -24,7 +24,7 @@ class App {
     this.app = express();
     this.env = vars.env;
     this.port = vars.port || 3000;
-    if( this.env === "test") this.port = 3009;
+    if (this.env === "test") this.port = 3009;
     this.modules = modules;
   }
 
@@ -33,7 +33,10 @@ class App {
     await this.initializeDatabase();
     logger.info('Connected to the database');
 
-    useExpressServer(this.app, this.modules, { 
+    const appModule = {
+      imports: this.modules
+    }
+    useExpressServer(this.app, appModule , {
       getProviderCallback: (provider: any) => Container.get(provider)
     });
 
