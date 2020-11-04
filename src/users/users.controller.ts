@@ -9,24 +9,24 @@ import { CreateUserDto } from './dtos/users.dto';
 import { isAuth } from '../auth/auth.middleware';
 
 @Use(isAuth)
-@Controller('/users')
+@Controller('users')
 export class UsersController {
   constructor(public userService: UsersService) {}
 
-  @Get('/')
+  @Get()
   public async getUsers(req: Request, res: Response) {
     const data: UsersEntity[] = await this.userService.findAll();
     res.status(StatusCodes.OK).json({ data });
   }
 
-  @Get('/:id(\\d+)')
+  @Get(':id(\\d+)')
   public async getUserById(req: Request, res: Response) {
     const id: number = Number(req.params.id);
     const data = await this.userService.findById(id);
     res.status(StatusCodes.OK).json({ data });
   }
 
-  @Post('/')
+  @Post()
   @Use(validateType(CreateUserDto))
   public async createUser(req: Request, res: Response) {
     const userData: CreateUserDto = req.body;
@@ -34,7 +34,7 @@ export class UsersController {
     res.status(StatusCodes.CREATED).json({ data });
   }
 
-  @Put('/:id(\\d+)')
+  @Put(':id(\\d+)')
   @Use(validateType(CreateUserDto, true))
   public async updateUser(req: Request, res: Response) {
     const userId: number = Number(req.params.id);
@@ -44,7 +44,7 @@ export class UsersController {
     res.status(StatusCodes.OK).json({ data });
   }
 
-  @Delete('/:id(\\d+)')
+  @Delete(':id(\\d+)')
   public async deleteUser(req: Request, res: Response) {
     const userId: number = Number(req.params.id);
     await this.userService.delete(userId);

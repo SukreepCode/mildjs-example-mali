@@ -12,12 +12,12 @@ import * as jwt from 'jsonwebtoken';
 import { vars } from '../app/config';
 import { DataStoredInToken, RequestWithUser } from './auth.interface';
 
-@Controller('/auth')
+@Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService, private userService: UsersService) {}
 
   @Use(validateType(CreateUserDto))
-  @Post('/signup')
+  @Post('signup')
   public async signUp(req: Request, res: Response) {
     const userData: CreateUserDto = req.body;
     const signUpUserData: UsersEntity = await this.userService.create(userData);
@@ -25,7 +25,7 @@ export class AuthController {
   }
 
   @Use(validateType(CreateUserDto))
-  @Post('/login')
+  @Post('login')
   public async logIn(req: Request, res: Response) {
     const userData: CreateUserDto = req.body;
 
@@ -47,19 +47,19 @@ export class AuthController {
   }
 
   @Use(isAuth)
-  @Post('/logout')
+  @Post('logout')
   public async logOut(req: Request, res: Response) {
     responseFormat(res, { message: 'logout' });
   }
 
-  @Post('/test')
+  @Post('test')
   @Use(isRole())
   public async testAuth(req: RequestWithUser, res: Response) {
     if (!req.user) new HttpException(StatusCodes.UNAUTHORIZED, 'Wrong authentication token');
     responseFormat(res, { message: `Hi ${req.user.username}` });
   }
 
-  @Post('/test-role')
+  @Post('test-role')
   @Use(isRole('student'))
   public async testRole(req: RequestWithUser, res: Response) {
     if (!req.user) new HttpException(StatusCodes.UNAUTHORIZED, 'Wrong authentication token');
