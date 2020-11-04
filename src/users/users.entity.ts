@@ -15,6 +15,8 @@ import {
 } from 'typeorm';
 import { RolesEntity } from '../roles/roles.entity';
 
+type Role = 'teacher' | 'student' | 'admin';
+
 @Entity()
 export class UsersEntity {
   @PrimaryGeneratedColumn()
@@ -39,11 +41,8 @@ export class UsersEntity {
   // @JoinTable()
   // role: RolesEntity;
 
-  @ManyToOne(
-    () => RolesEntity,
-    (item) => item.id,
-  )
-  role: RolesEntity;
+  @Column({ nullable: true })
+  role: Role;
 
   @OneToMany((type) => EnrollEntity, (enroll) => enroll.id)
   enroll: EnrollEntity;
