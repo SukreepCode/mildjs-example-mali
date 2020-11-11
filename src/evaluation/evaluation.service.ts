@@ -1,9 +1,10 @@
-import { Service } from 'typedi';
-import { InjectRepository } from 'typeorm-typedi-extensions';
+
 import { Repository, DeleteResult } from 'typeorm';
 import { EvaluationEntity } from './evaluation.entity';
+import { HttpException, Injectable } from '@mildjs/core';
+import { InjectRepository } from '@mildjs/typeorm';
 
-@Service()
+@Injectable()
 export class EvaluationService {
   constructor(
     @InjectRepository(EvaluationEntity)

@@ -1,14 +1,22 @@
 import { NextFunction, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
-import { HttpException, StatusCodes , combineMiddlewares} from '@mildjs/core';
-import { Container } from 'typeorm-di';
+import { HttpException, StatusCodes , combineMiddlewares, Injectable} from '@mildjs/core';
+// import { Container } from 'typeorm-di';
 import { DataStoredInToken, RequestWithUser } from './auth.interface';
 import { UsersService } from '../users/users.service';
 import { logger, vars } from '../app/config';
 import { RequestHandler } from 'express';
 
+// @Injectable()
+// class AuthGuard {
+//   constructor(private usersService: UsersService){}
+
+
+  
+// }
+
 export async function isAuth(req: RequestWithUser, res: Response, next: NextFunction) {
-  const userService: UsersService = Container.get(UsersService);
+  // const userService: UsersService = Container.get(UsersService);
 
   if (req.headers.authorization) {
     const secret = vars.jwtSecret;
@@ -18,10 +26,10 @@ export async function isAuth(req: RequestWithUser, res: Response, next: NextFunc
       const verificationResponse = jwt.verify(requestToken, secret) as DataStoredInToken;
       const userId = verificationResponse.id;
 
-      const findUser = await userService.findById(userId);
+      // const findUser = await userService.findById(userId);
 
-      if (findUser) {
-        req.user = findUser;
+      if (/* findUser */ true ) {
+        // req.user = findUser;
         next();
       } else {
         next(new HttpException(401, "Wrong authentication token: Can't find user"));

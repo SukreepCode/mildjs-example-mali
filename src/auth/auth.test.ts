@@ -16,7 +16,7 @@ describe('Testing Auth', () => {
         password: 'q1w2e3r4',
       };
 
-      const app = new App([AuthController]);
+      // const app = new App([AuthController]);
       // const { prefix } = getControllerData(AuthController);
 
       // return request(app.getHttpServer()).post(`${prefix}/signup`).send(userData);
@@ -31,7 +31,7 @@ describe('Testing Auth', () => {
       };
       // process.env.JWT_SECRET = 'jwt_secret';
 
-      const app = new App([AuthController]);
+      // const app = new App([AuthController]);
       // const { prefix } = getControllerData(AuthController);
 
       // return request(app.getHttpServer())
@@ -43,7 +43,7 @@ describe('Testing Auth', () => {
 
   describe('[POST] /logout', () => {
     it('logout Set-Cookie Authorization=; Max-age=0', () => {
-      const app = new App([AuthController]);
+      // const app = new App([AuthController]);
       // const { prefix } = getControllerData(AuthController);
 
       // TODO: Check the token in the header instead

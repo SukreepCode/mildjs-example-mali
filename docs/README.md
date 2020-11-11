@@ -40,7 +40,7 @@ Note: `typeorm-di` is just the wrapper library of `typeorm`
     import { Service, Repository, InjectRepository } from "typeorm-di";
     import { User } from "./users.entity";
 
-    @Service()
+    @Injectable()
     class UserService {
 
         @InjectRepository(User) 

@@ -1,9 +1,11 @@
-import { Service } from 'typedi';
-import { InjectRepository } from 'typeorm-typedi-extensions';
+
 import { Repository, DeleteResult } from 'typeorm';
 import { EnrollEntity } from './enroll.entity';
 
-@Service()
+import { HttpException, Injectable } from '@mildjs/core';
+import { InjectRepository } from '@mildjs/typeorm';
+
+@Injectable()
 export class EnrollService {
   constructor(
     @InjectRepository(EnrollEntity)

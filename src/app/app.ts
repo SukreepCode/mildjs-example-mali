@@ -11,32 +11,27 @@ import swaggerUi from 'swagger-ui-express';
 import { vars, logger } from './config';
 import errorMiddleware from './error.middleware';
 
-import { useExpressServer } from '@mildjs/core';
-import { Connection, createConnection, useContainer, Container } from 'typeorm-di';
+import { useExpressServer, ExpressAppOption } from '@mildjs/core';
+// import { Connection, createConnection, useContainer, Container } from 'typeorm-di';
 
 class App {
   private app: express.Application;
   public port: string | number;
   public env: string;
-  private modules: any[];
+  private expressAppOption: ExpressAppOption;
 
-  constructor(modules: any[]) {
+  constructor(option: ExpressAppOption) {
     this.app = express();
     this.env = vars.env;
     this.port = vars.port || 3000;
     if (this.env === "test") this.port = 3009;
-    this.modules = modules;
+    this.expressAppOption = option;
   }
 
   public async init() {
     this.initializeMiddlewares();
-    await this.initializeDatabase();
-    logger.info('Connected to the database');
 
-    useExpressServer(this.app, {
-      imports: this.modules,
-      getProviderCallback: (provider: any) => Container.get(provider)
-    });
+    useExpressServer(this.app, this.expressAppOption);
 
     this.initializeSwagger();
     this.initializeErrorHandling();
@@ -91,19 +86,6 @@ class App {
     this.app.use(errorMiddleware);
   }
 
-  private initializeDatabase(): Promise<Connection> {
-    // Import all entity
-    useContainer(Container);
-    const connection = createConnection({
-      name: 'default',
-      type: 'sqlite',
-      database: './app.sqlite',
-      synchronize: true,
-      entities: ['**/*.entity.ts'],
-    });
-
-    return connection;
-  }
 }
 
 export default App;

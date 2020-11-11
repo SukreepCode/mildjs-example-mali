@@ -1,18 +1,19 @@
-import { HttpException } from '@mildjs/core';
-import { DeleteResult, Repository, InjectRepository, Service } from 'typeorm-di';
+import { HttpException, Injectable } from '@mildjs/core';
+import { InjectRepository } from '@mildjs/typeorm';
+import { Repository, DeleteResult } from 'typeorm';
 
 import { isEmptyObject } from '../app/util';
 import { CreateUserDto } from './dtos/users.dto';
 import { UsersEntity } from './users.entity';
 import { assignObject } from '../app/util';
 
-@Service()
+@Injectable()
 export class UsersService {
 
   constructor(
     @InjectRepository(UsersEntity)
     private repository: Repository<UsersEntity>
-  ){}
+  ) { }
 
   public findAll(): Promise<UsersEntity[]> {
     const users = this.repository.find();
